@@ -1,0 +1,29 @@
+{
+  "name": "utopyui",
+  "version": "1.0.0",
+  "description": "Une application d'interface graphique pour Utopy",
+  "main": "main.js",
+  "author": "Paul-Henri Andrieu",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.4.8"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@material/button": "^10.0.0",
+    "canvas-gauges": "^2.1.7",
+    "chart.js": "^2.9.4",
+    "chartjs-chart-radial-gauge": "^1.0.3",
+    "devextreme": "20.2.5",
+    "highcharts": "^9.0.1",
+    "highcharts-more": "^0.1.7",
+    "jquery": "^3.5.1"
+  },
+  "build": {
+    "appId": "fr.phandrieu.utopyui",
+    "author": "Paul-Henri Andrieu",
+    "copyright": "Copyright ©2021 Paul-Henri Andrieu"
+  }
+}

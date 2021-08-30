@@ -1,0 +1,29 @@
+
+
+html, body, .container-fluid {
+height: 100%;
+background-color: #111;
+display: flex; justify-content: center; align-items: center
+}
+
+body {
+    -ms-overflow-style: scrollbar;
+    -webkit-app-region:drag;
+
+}
+
+.parent { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(2, 1fr); 
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+    }
+    .div1 { grid-area: 1 / 1 / 2 / 3; display: flex; justify-content: center; align-items: center;  } 
+    .div2 { grid-area: 1 / 3 / 2 / 5; display: flex; justify-content: center; align-items: center;  } 
+    .div3 { grid-area: 2 / 1 / 3 / 2; display: flex; justify-content: center; align-items: center;  } 
+    .div4 { grid-area: 2 / 2 / 3 / 3; display: flex; justify-content: center; align-items: center;  } 
+    .div5 { grid-area: 2 / 3 / 3 / 4; display: flex; justify-content: center; align-items: center;  } 
+    .div6 { grid-area: 2 / 4 / 3 / 5; display: flex; justify-content: center; align-items: center;  } 
+
+

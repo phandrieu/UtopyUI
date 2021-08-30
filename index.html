@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html id="bg">
+
+  <head>
+    <link rel="stylesheet" href="index.css"/>
+    <meta charset="UTF-8"/>
+    <title>UtopyUI</title>
+    <script src="jquery.min.js"></script>
+    <script src="node_modules/canvas-gauges/gauge.min.js"></script>
+    <script type="text/javascript" src="easeljs.min.js"></script>
+    <script type="text/javascript" src="eventemitter2.min.js"></script>
+    <script src="roslib.js"></script>
+    <script src="connection.js"></script>
+    <script src="gamepad.js"></script>
+    <script type="text/javascript" src="ros2d.min.js"></script>
+    <script type="text/javascript" src="nav2d.js"></script>
+    <script type="text/javascript" type="text/javascript">
+    x = 0;
+    z = 0;
+      document.addEventListener('keydown', function(event) {
+    const key = event.key; // "a", "1", "Shift", etc.
+    if(key == "ArrowUp"){
+      x=0.5;
+      publishCmdVel(x,z);
+      console.log("up");
+    }
+    if(key == "ArrowDown"){
+      x=-0.5;
+      publishCmdVel(x,z);
+      console.log("down");
+    }
+    if(key == "ArrowLeft"){
+      z=-5.5;
+      publishCmdVel(x,z);
+      console.log("left");
+    }
+    if(key == "ArrowRight"){
+      z=5.5;
+      publishCmdVel(x,z);
+      console.log("right");
+    }
+    if(key == " "){
+      document.body.style.backgroundColor = "red";
+      document.getElementById("bg").style.backgroundColor = "red";
+      x=5;
+      publishCmdVel(x,z);
+      console.log("TURBOOOO");
+    }
+});
+document.addEventListener('keyup', function(event) {
+    const key = event.key; // "a", "1", "Shift", etc.
+    if(key == "ArrowUp"){
+      x=0;
+      publishCmdVel(x,z);
+      console.log("nonup");
+    }
+    if(key == "ArrowDown"){
+      x=0;
+      publishCmdVel(x,z);
+      console.log("nondown");
+    }
+    if(key == "ArrowLeft"){
+      z=0;
+      publishCmdVel(x,z);
+      console.log("nonleft");
+    }
+    if(key == "ArrowRight"){
+      z=0;
+      publishCmdVel(x,z);
+      console.log("nonright");
+    }
+    if(key == " "){
+      document.body.style.backgroundColor = "#111";
+      document.getElementById("bg").style.backgroundColor = "#111";
+      x=0;
+      publishCmdVel(x,z);
+      console.log("plus turbo :(");
+    }
+    
+
+});
+      function init(){
+      var viewer = new ROS2D.Viewer({
+      divID : 'map',
+      width : 480,
+      height : 360
+      });
+      var gridClient = new ROS2D.OccupancyGridClient({
+      ros : ros,
+      rootObject : viewer.scene
+      });
+      
+      gridClient.on('change', function(){
+      viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+      });
+    }
+       </script>
+  </head>
+
+  <body onload="init()">
+    <div class="parent">
+      <div class="div1">
+        <script>
+          var boost = 1;
+          window.addEventListener('gamepadconnected', (event) => {
+            
+            const update = () => {
+              
+              for (const gamepad of navigator.getGamepads()) {
+                if (!gamepad) continue;
+                if(gamepad.axes)
+                if(gamepad.buttons[0].pressed == true){
+                  boost = 7;
+                  console.log('TURBOOOOOOO');
+                }
+                else{
+                  boost = 1;
+                }
+                publishCmdVel(Math.pow(boost*gamepad.axes[1], 3), -1*gamepad.axes[0]);
+                
+                
+              }
+
+              requestAnimationFrame(update);
+            };
+            update();
+          });
+          </script>
+      </div>
+      <div class="div2">
+        <div id="nav" onload="init()"></div>
+        <script type="text/javascript" type="text/javascript">
+          function init(){
+          var viewer = new ROS2D.Viewer({
+divID : 'nav',
+width : 500,
+height : 384
+});
+var nav = NAV2D.OccupancyGridClientNav({
+         ros : ros,
+         rootObject : viewer.scene,
+         viewer : viewer,
+         serverName : '/pr2_move_base'
+ });
+        }
+           </script>
+      </div>
+      <div class="div3">
+        <canvas id="rpm1"></canvas>
+      </div>
+      <div class="div4">
+        <canvas id="rpm2"></canvas>
+      </div>
+      <div class="div5">
+        <canvas id="volt"></canvas>
+      </div>
+      <div class="div6">
+        <canvas id="amp"></canvas>
+      </div>
+    </div>
+    <script src="gauges.js"></script>
+    <script src="gamepad.js"></script>
+  </body>
+
+</html>
